@@ -37,7 +37,7 @@
 > * 需要额外注意的是，Serverless Registry 不提供额外的注册功能，只会依靠 Github 授权操作进行用户身份的识别，如果您在后期使用过程中有任何问题欢迎发送邮件到 service@52exe.cn 进行沟通交流。
 
 
-> todo: 由于 China 打开 Github 经受收到网络的考验，所以在 login 的环节有优化的空间
+> todo: 由于 China 打开 Github 会受到网络的考验，所以在 login 的环节有优化的空间
 
 
 ## 发布 Pacakge ：publish
