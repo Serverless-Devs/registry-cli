@@ -3,11 +3,11 @@
 本工具是一款基于 Serverless Devs Component 的 Serverless Registry 管理工具，通过本工具可以做到：
 
 - [登陆 Serverless Registry](#登陆功能login)
-- [发布 Package 到默认的 Serverless Registry 平台](#发布Pacakgepublish)
-- [查看当前登陆账号发布过的 Package](#查看Pacakge列表list)
-- [查看某个 Package 的版本信息](#查看某Package的版本信息versions)
-- [删除某个指定版本的 Package](#删除Packagedelete)
-- [对登陆 token 进行更新](#对Token进行更新retoken)
+- [发布 Package 到默认的 Serverless Registry 平台](#发布-pacakge-publish)
+- [查看当前登陆账号发布过的 Package](#查看-pacakge-列表list)
+- [查看某个 Package 的版本信息](#查看某-package-的版本信息versions)
+- [删除某个指定版本的 Package](#删除-packagedelete)
+- [对登陆 token 进行更新](#对-token-进行更新retoken)
 
 > 关于如何开发 Package 可以参考相关的问题：
 > - [组件 Component 的开发文档](https://github.com/Serverless-Devs/Serverless-Devs/blob/master/docs/zh/package_dev.md#%E7%BB%84%E4%BB%B6%E5%BC%80%E5%8F%91%E8%AF%B4%E6%98%8E)
