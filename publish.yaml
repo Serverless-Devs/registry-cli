@@ -1,0 +1,24 @@
+# 规范详情参考: https://github.com/Serverless-Devs/Serverless-Devs/blob/master/spec/zh/0.0.1/serverless_package_model/3.package_model.md#%E7%BB%84%E4%BB%B6%E6%A8%A1%E5%9E%8B%E5%85%83%E6%95%B0%E6%8D%AE
+Type: Component
+Name: registry
+Provider:
+  - 阿里云
+  - 腾讯云
+  - Azure
+  - 其它
+  - 华为云
+  - 百度智能云
+  - AWS
+  - Google Cloud
+Version: 0.0.1
+Description: Serverless Registry组件
+HomePage: https://github.com/Serverless-Devs/registry
+Tags: #标签详情
+  - Registry
+Category: 其它
+Commands: # 指令，格式为指令：指令描述，例如：
+  login: 登陆Registry
+  pubish: 发布组件
+  list: 查询已发布的组件
+  versions: 查询某组件的版本
+  delete: 行删除已发布的组件
