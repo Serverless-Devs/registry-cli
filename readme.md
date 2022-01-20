@@ -1,5 +1,6 @@
 # Serverless Registry 开发者工具
 
+
 本工具是一款基于 Serverless Devs Component 的 Serverless Registry 管理工具，通过本工具可以做到：
 
 - [登陆 Serverless Registry](#登陆功能login)
@@ -34,6 +35,10 @@
     ![图片alt](https://serverless-article-picture.oss-cn-hangzhou.aliyuncs.com/1642671050946_20220120093051343877.png)
     
 > * 需要额外注意的是，Serverless Registry 不提供额外的注册功能，只会依靠 Github 授权操作进行用户身份的识别，如果您在后期使用过程中有任何问题欢迎发送邮件到 service@52exe.cn 进行沟通交流。
+
+
+> todo: 由于 China 打开 Github 经受收到网络的考验，所以在 login 的环节有优化的空间
+
 
 ## 发布 Pacakge ：publish
 
@@ -145,3 +150,4 @@ Package 开发最佳实践：https://github.com/Serverless-Devs/Serverless-Devs/
 | <center>关注微信公众号：`serverless`</center> | <center>联系微信小助手：`xiaojiangwh`</center> | <center>加入钉钉交流群：`33947367`</center> | 
 
 </p>
+
