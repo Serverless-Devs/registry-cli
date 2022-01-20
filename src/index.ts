@@ -313,7 +313,7 @@ export default class Platform {
         const baseDir = "./"
         const codeUri = "./"
         try {
-            await fse.mkdirSync(codeUri)
+            await fse.mkdirSync('./.s/')
         } catch (e) {
         }
         const tempName = './.s/' + random({length: 20}) + '.zip'
