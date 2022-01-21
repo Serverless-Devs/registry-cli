@@ -7,6 +7,7 @@
 - [发布 Package 到默认的 Serverless Registry 平台](#发布-pacakge-publish)
 - [查看当前登陆账号发布过的 Package](#查看-pacakge-列表list)
 - [查看某个 Package 的版本信息](#查看某-package-的版本信息versions)
+- [查看某个 Package 指定版本信息](#查看某-package-指定版本信息detail)
 - [删除某个指定版本的 Package](#删除-packagedelete)
 - [对登陆 token 进行更新](#对-token-进行更新retoken)
 
@@ -80,7 +81,7 @@ $ s cli registry list
 
 - `name`: 表示 Pacakge 名字
 
-操作示例：`s cli registry version --name fc`:
+操作示例：`s cli registry versions --name fc`:
 
 ```
 $ s cli registry versions --name fc
@@ -98,6 +99,23 @@ Versions:
   - tag_name: 0.1.35
     published_at: '2021-12-30T07:30:11.873Z'
     zipball_url: https://registry.devsapp.cn/simple/fc/zipball/0.1.35
+```
+
+## 查看某 Package 指定版本信息：detail
+
+通过 `detail` 命令可以查看指定版本 Package 的信息。
+
+该命令有一个参数：
+
+- `name-version`: Pacakge 的名称和版本，通过`@`符号进行连接，例如：`demo@0.0.1`
+
+操作示例：`s cli registry detail --name-version fc-builda@0.0.1`:
+
+```
+$ s cli registry detail --name-version fc-builda@0.0.1
+tag_name: 0.0.1
+published_at: '2022-01-21T03:58:55.316Z'
+zipball_url: https://registry.devsapp.cn/simple/fc-builda/zipball/0.0.1
 ```
 
 ## 删除 Package：delete

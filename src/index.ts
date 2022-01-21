@@ -21,8 +21,12 @@ function sleep(timer: number) {
 export default class Platform {
 
     async _getToken() {
-        const contentText = fse.readFileSync(`${getRootHome()}/serverless-devs-platform.dat`, 'utf-8');
-        return contentText
+        try {
+            const contentText = fse.readFileSync(`${getRootHome()}/serverless-devs-platform.dat`, 'utf-8');
+            return contentText
+        } catch (e) {
+            return null
+        }
     }
 
     async _getContent(fileList) {
@@ -252,6 +256,80 @@ export default class Platform {
         return tempResult
     }
 
+    public async detail(inputs: InputProps) {
+        const token = await this._getToken()
+        if (!token) {
+            throw new CatchableError(`Please perform serverless registry through [s cli registry login]`, 'Failed to get serverless registry token')
+        }
+        const apts = {
+            boolean: ['help'],
+            alias: {help: 'h'},
+        };
+        const comParse = commandParse({args: inputs.args}, apts);
+        if (comParse.data && comParse.data.help) {
+            help([{
+                header: 'Detail',
+                content: `Query the details of a package`
+            }, {
+                header: 'Usage',
+                content: `$ s cli registry detail <options>`
+            }, {
+                header: 'Options',
+                optionList: [
+                    {
+                        name: 'name-version',
+                        description: '[Required] The name and version of the package, such as name@version',
+                        type: String,
+                    }
+                ],
+            }, {
+                header: 'Examples without Yaml',
+                content: [
+                    '$ s cli registry delete --name-version thinphp@0.0.1 --type Component',
+                ],
+            },]);
+            return;
+        }
+        const package_name = comParse.data ? comParse.data['name-version'] : null
+        if (!package_name || !package_name.includes("@")) {
+            throw new CatchableError('Component name and version is required.', "Please add --name-version, like: s cli registry delete --name-version thinphp@0.0.1 --type Component");
+        }
+
+        const options = {
+            'method': 'GET',
+            'url': `http://registry.devsapp.cn/simple/${package_name.split("@")[0]}/releases`,
+            'headers': {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            }
+        };
+
+        let rpbody
+        try {
+            rpbody = await rp(options);
+        } catch (e) {
+            throw new CatchableError('Network exception. Please try again later.', 'Data request exception')
+        }
+
+        let tempResult = JSON.parse(rpbody)
+        if (tempResult.Response.Error) {
+            throw new CatchableError(`${tempResult.Response.Error}: ${tempResult.Response.Message}`, 'Failed to obtain relevant information')
+        }
+        tempResult = tempResult.Response
+        for (let i = 0; i < tempResult.length; i++) {
+            if (tempResult[i].tag_name == package_name.split("@")[1]) {
+                return {
+                    tag_name: tempResult[i].tag_name,
+                    published_at: tempResult[i].published_at,
+                    zipball_url: tempResult[i].zipball_url
+                }
+            }
+        }
+
+        logger.warn("The specified package version was not found.")
+
+        return null
+    }
+
     /**
      * demo 发布Package
      * @param inputs
@@ -318,7 +396,7 @@ export default class Platform {
         }
         const tempName = './.s/' + random({length: 20}) + '.zip'
         const runtime = "nodejs12"
-        await this.zipCode(baseDir, codeUri, tempName, runtime);
+        await this.zipCode(baseDir, codeUri, tempName, runtime)
         const vm = spinner('Publishing');
         try {
             rpbody = await rp({
@@ -331,6 +409,10 @@ export default class Platform {
             vm.fail('Publishing failed')
             throw new CatchableError('Network exception. Please try again later.', e.body)
         }
+        try{
+            // 尝试删除
+            fse.unlinkSync(tempName)
+        }catch(e){}
         return null
     }
 
@@ -395,7 +477,11 @@ export default class Platform {
                 zipball_url: tempResult[i].version.zipball_url
             })
         }
-        return result
+        if(result){
+            return result
+        }
+        logger.info('You haven\'t released Pacakge yet')
+        return null
 
     }
 
