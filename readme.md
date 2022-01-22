@@ -153,8 +153,9 @@ End of method: retoken
 ```
 
 ------
-Package 开发最佳实践：https://github.com/Serverless-Devs/Serverless-Devs/discussions/62
-
+Package 开发最佳实践：
+- https://github.com/Serverless-Devs/Serverless-Devs/discussions/62
+- https://github.com/Serverless-Devs/Serverless-Devs/discussions/407
 ------
 
 # 交流社区
