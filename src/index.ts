@@ -409,10 +409,11 @@ export default class Platform {
             vm.fail('Publishing failed')
             throw new CatchableError('Network exception. Please try again later.', e.body)
         }
-        try{
+        try {
             // 尝试删除
             fse.unlinkSync(tempName)
-        }catch(e){}
+        } catch (e) {
+        }
         return null
     }
 
@@ -477,7 +478,7 @@ export default class Platform {
                 zipball_url: tempResult[i].version.zipball_url
             })
         }
-        if(result){
+        if (result) {
             return result
         }
         logger.info('You haven\'t released Pacakge yet')
@@ -616,4 +617,87 @@ export default class Platform {
         logger.log(`Serverless Registry login token reset succeeded.`, "green");
         return null
     }
+
+    /**
+     * demo 查询package
+     * @param inputs
+     * @returns
+     */
+    public async search(inputs: InputProps) {
+        const apts = {
+            boolean: ['help'],
+            alias: {help: 'h'},
+        };
+        const comParse = commandParse({args: inputs.args}, apts);
+        if (comParse.data && comParse.data.help) {
+            help([{
+                header: 'Search',
+                content: `Search packages`
+            }, {
+                header: 'Usage',
+                content: `$ s cli registry search <options>`
+            }, {
+                header: 'Options',
+                optionList: [
+                    {
+                        name: 'type',
+                        description: '[Required] The type of package, value: component, application, plugin',
+                        type: String,
+                    },
+                    {
+                        name: 'keyword',
+                        description: '[Optional] search keyword',
+                        type: String,
+                    }
+                ],
+            }, {
+                header: 'Examples without Yaml',
+                content: [
+                    '$ s cli registry search --type component',
+                ],
+            },]);
+            return;
+        }
+        const packageType = comParse.data ? comParse.data.type : null
+        const packageKeyword = comParse.data ? comParse.data.keyword : null
+        if (!packageType) {
+            throw new CatchableError('Package type is required, value: Component, Application, Plugin', "Please add --type, like: s cli registry versions --type component");
+        }
+        const options = {
+            'method': 'POST',
+            'url': `http://registry.devsapp.cn/package/search`,
+            'headers': {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            'form': {
+                "type": packageType,
+                "keyword": packageKeyword
+            }
+        };
+        let rpbody
+        try {
+            rpbody = await rp(options);
+        } catch (e) {
+            throw new CatchableError('Network exception. Please try again later.', 'Data request exception')
+        }
+        let result = []
+        let tempResult = JSON.parse(rpbody)
+        if (tempResult.Response.Error) {
+            throw new CatchableError(`${tempResult.Response.Error}: ${tempResult.Response.Message}`, 'Failed to obtain relevant information')
+        }
+        tempResult = tempResult.Response
+        for (let i = 0; i < tempResult.length; i++) {
+            result.push({
+                name: tempResult[i].package,
+                description: tempResult[i].description,
+                version: {
+                    tag_name: tempResult[i].version.tag_name,
+                    published_at: tempResult[i].version.published_at,
+                    zipball_url: tempResult[i].version.zipball_url
+                }
+            })
+        }
+        return result
+    }
+
 }

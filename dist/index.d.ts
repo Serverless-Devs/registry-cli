@@ -48,4 +48,10 @@ export default class Platform {
      * @returns
      */
     retoken(inputs: InputProps): Promise<any>;
+    /**
+     * demo 查询package
+     * @param inputs
+     * @returns
+     */
+    search(inputs: InputProps): Promise<any[]>;
 }

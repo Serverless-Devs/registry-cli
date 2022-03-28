@@ -1,5 +1,6 @@
 # Serverless Registry 开发者工具
 
+<center>中文 ｜ <a href="readme_en.md">English</a></center>
 
 本工具是一款基于 Serverless Devs Component 的 Serverless Registry 管理工具，通过本工具可以做到：
 
@@ -10,13 +11,14 @@
 - [查看某个 Package 指定版本信息](#查看某-package-指定版本信息detail)
 - [删除某个指定版本的 Package](#删除-packagedelete)
 - [对登陆 token 进行更新](#对-token-进行更新retoken)
+- [搜索指定Package](搜索指定Packagesearch)
 
 > 关于如何开发 Package 可以参考相关的问题：
 > - [组件 Component 的开发文档](https://github.com/Serverless-Devs/Serverless-Devs/blob/master/docs/zh/package_dev.md#%E7%BB%84%E4%BB%B6%E5%BC%80%E5%8F%91%E8%AF%B4%E6%98%8E)
 > - [应用 Application 的开发文档](https://github.com/Serverless-Devs/Serverless-Devs/blob/master/docs/zh/package_dev.md#%E5%BA%94%E7%94%A8%E5%BC%80%E5%8F%91%E8%AF%B4%E6%98%8E)    
 > -----
 > 1. 关于 Serverless Pacakge 和 Serverless Devs 以及 Serverless Registry的关系，可以参考[ SDM 规范文档](https://github.com/Serverless-Devs/Serverless-Devs/blob/master/spec/readme.md)    
-> 2. 关于什么是 Serverless Registry 以及 Serverless Registry 模型规范，可以参看[ SRM 规范文档](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/spec/zh/0.0.1/serverless_registry_model)
+> 2. 关于什么是 Serverless Registry 以及 Serverless Registry 模型规范，可以参看[ SRM 规范文档](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/spec/zh/0.0.2/serverless_registry_model)
 > -----
 > * 需要额外说明的是，本工具仅支持将 Package 发布到默认的 Registry (registry.devsapp.cn/simple)，如果想要发布到其他的 Registry，可以参考：
 >    - 如果是 Github 或者 Gitee 源，只需要创建一个仓库，发布一个版本即可，例如在 Github 的 devsapp 组织下创建了一个 demo 的仓库，并发布了一个 Release，此时就可以直接[切换源到 Github 源](https://github.com/Serverless-Devs/Serverless-Devs/blob/master/docs/zh/command/set.md#set-registry-%E5%91%BD%E4%BB%A4) ，并且将组件写成`组织名/仓库名`即可，例如`devsapp/demo`，系统就可以自动检测并加载相关组件； 
@@ -45,11 +47,11 @@
 
 > 此操作需要在完成[登陆环节](#登陆功能login) 之后进行。
 
-在符合 [Serverless Pacakge](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/spec/zh/0.0.1/serverless_package_model) 的规范的项目下，可以通过 `publish` 命令，进行组件的发布。
+在符合 [Serverless Pacakge](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/spec/zh/0.0.2/serverless_package_model) 的规范的项目下，可以通过 `publish` 命令，进行组件的发布。
 
 例如可以直接执行：`s cli registry publish`
 
-> 关于 Package 的目录结构以及相关取值和规范，请参考[Pacakge 模型](https://github.com/Serverless-Devs/Serverless-Devs/blob/master/spec/zh/0.0.1/serverless_package_model/3.package_model.md) ;
+> 关于 Package 的目录结构以及相关取值和规范，请参考[Pacakge 模型](https://github.com/Serverless-Devs/Serverless-Devs/blob/master/spec/zh/0.0.2/serverless_package_model/3.package_model.md) ;
 
 ## 查看 Pacakge 列表：list
 
@@ -150,6 +152,35 @@ result: Succeed
 $ s cli registry retoken
 Serverless Registry login token reset succeeded.
 End of method: retoken
+```
+
+## 搜索指定Package：search
+
+通过 `search` 命令可以搜索相关的包信息。
+
+该命令有两个参数：
+
+- `keyword`: 搜索关键词
+- `type`：Package 类型，取值为 `Component` 或 `Application`，`Plugin`
+
+操作示例：`s cli registry delete --name-version wordpress@0.0.1 --type Component`
+
+```
+$ s cli registry search --type plugin
+- 
+  name:        core
+  description: Serverless Devs Demo
+  version: 
+    tag_name:     dev
+    published_at: 2022-03-27T10:13:40.131Z
+    zipball_url:  https://registry.devsapp.cn/simple/core/zipball/dev
+- 
+  name:        fc-package
+  description: demo
+  version: 
+    tag_name:     0.0.3
+    published_at: 2022-01-17T09:07:04.315Z
+    zipball_url:  https://registry.devsapp.cn/simple/fc-package/zipball/0.0.3
 ```
 
 ------

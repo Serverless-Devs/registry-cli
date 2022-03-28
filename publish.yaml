@@ -10,16 +10,18 @@ Provider:
   - 百度智能云
   - AWS
   - Google Cloud
-Version: 0.0.3
-Description: Serverless Registry组件
+Version: 0.0.6
+Description: Serverless Registry Component
 HomePage: https://github.com/Serverless-Devs/registry
 Tags: #标签详情
   - Registry
 Category: 其它
 Commands: # 指令，格式为指令：指令描述，例如：
-  login: 登陆Registry
-  pubish: 发布组件
-  list: 查询已发布的组件
-  versions: 查询某组件的版本
-  detail: 查询指定版本信息
-  delete: 行删除已发布的组件
+  login: Login Serverless Registry
+  pubish: Publish a package to Registry
+  list: List packages which published by logined account
+  versions: List pacakges versions
+  detail: Get a package detail information
+  delete: Delete a package
+  retoken: Update Login token
+  search: Seach packages
