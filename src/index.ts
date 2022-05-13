@@ -208,7 +208,7 @@ export default class Platform {
                     },
                     {
                         name: 'type',
-                        description: '[Required] Package type, value: [Component/Application]',
+                        description: '[Required] Package type, value: [Component/Application/Plugin]',
                         type: String,
                     }
                 ],
@@ -225,8 +225,8 @@ export default class Platform {
         if (!package_name || !package_name.includes("@")) {
             throw new CatchableError('Component name and version is required.', "Please add --name-version, like: s cli registry delete --name-version thinphp@0.0.1 --type Component");
         }
-        if (!package_type || !['Component', 'Application'].includes(package_type)) {
-            throw new CatchableError('Component type is required. The velue of type: [Component/Application]', "Please add --type, like: s cli registry delete --name-version thinphp@0.0.1 --type Component");
+        if (!package_type || !['Component', 'Application', 'Plugin'].includes(package_type)) {
+            throw new CatchableError('Component type is required. The velue of type: [Component/Application/Plugin]', "Please add --type, like: s cli registry delete --name-version thinphp@0.0.1 --type Component");
         }
 
         const options = {
