@@ -51,6 +51,23 @@ export async function isIgnoredInCodeUri(actualCodeUri: string, runtime: string)
   };
 }
 
+export async function isIgnoredInCodeUri2(actualCodeUri: string, runtime: string): Promise<Function> {
+  const ignoreFilePath = path.join(actualCodeUri, '.signore');
+
+  const fileContent: string = await getIgnoreContent(ignoreFilePath);
+  const fileContentList: string[] = fileContent.split('\n');
+  const ignoreDependencies = selectIgnored(runtime);
+
+  let array = ignoredFile.concat(ignoreDependencies).concat(fileContentList);
+  const ig = ignore().add(array);
+
+  return function (f) {
+    const relativePath = path.relative(actualCodeUri, f);
+    if (relativePath === '') { return false; }
+    return ig.ignores(relativePath);
+  };
+}
+
 export async function isIgnored(baseDir: string, runtime: string, actualCodeUri: string, ignoreRelativePath?: string): Promise<Function> {
   const ignoreFilePath = path.join(baseDir, '.signore');
 

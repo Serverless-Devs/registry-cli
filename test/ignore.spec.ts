@@ -1,8 +1,7 @@
 import {fse, ignore} from "@serverless-devs/core";
 import * as os from "os";
 import path from "path";
-import {isIgnoredInCodeUri} from "../src/ignore";
-import {randomInt} from "crypto";
+import {isIgnoredInCodeUri, isIgnoredInCodeUri2} from "../src/ignore";
 
 describe('isIgnoredInCodeUri', () => {
     let debugIndex = 'node_modules/debug/src/index.js';
@@ -14,7 +13,7 @@ describe('isIgnoredInCodeUri', () => {
     let distIndexAbsPath: string;
 
     beforeEach(() => {
-        dir = path.join(os.tmpdir(), 'is-ignored-in-code-uri-playground-' + randomInt(100));
+        dir = path.join(os.tmpdir(), 'is-ignored-in-code-uri-playground');
         console.log(`setting up playground ${dir}`);
 
         debugIndexAbsPath = path.join(dir, debugIndex);
@@ -49,20 +48,6 @@ describe('isIgnoredInCodeUri', () => {
         let signoreContent = [
             '/src/'
         ];
-
-        await testSIgnoreContent(signoreContent);
-    });
-
-    test('node_modules/debug/src/index.js should not be ignored when specified /src/ in .signore workaround', async function () {
-        let signoreContent = [
-            '!/node_modules/**/src/',
-            '/src/'
-        ];
-
-        await testSIgnoreContent(signoreContent);
-    });
-
-    async function testSIgnoreContent(signoreContent: Array<string>) {
         fse.outputFileSync(path.resolve(dir, '.signore'), signoreContent.join('\r\n'))
         let i = ignore().add(signoreContent);
 
@@ -79,5 +64,28 @@ describe('isIgnoredInCodeUri', () => {
         expect(i.ignores(debugIndex)).toBeFalsy();
         expect(f(debugIndexAbsPath)).toBeFalsy(); // this should pass as described above
         console.log(`${debugIndex} kept`);
-    }
+    });
+
+    test('node_modules/debug/src/index.js should not be ignored when specified /src/ in .signore workaround', async function () {
+        let signoreContent = [
+            '/src/'
+        ];
+
+        fse.outputFileSync(path.resolve(dir, '.signore'), signoreContent.join('\r\n'))
+        let i = ignore().add(signoreContent);
+
+        let f = await isIgnoredInCodeUri2(dir, 'invalid-runtime');
+
+        expect(i.ignores(srcIndex)).toBeTruthy();
+        expect(f(srcIndexAbsPath)).toBeTruthy();
+        console.log(`${srcIndex} ignored`);
+
+        expect(i.ignores(distIndex)).toBeFalsy();
+        expect(f(distIndexAbsPath)).toBeFalsy();
+        console.log(`${distIndex} kept`);
+
+        expect(i.ignores(debugIndex)).toBeFalsy();
+        expect(f(debugIndexAbsPath)).toBeFalsy(); // this pass
+        console.log(`${debugIndex} kept`);
+    });
 });
