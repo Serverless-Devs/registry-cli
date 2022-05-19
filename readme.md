@@ -11,6 +11,7 @@
 - [查看某个 Package 指定版本信息](#查看某-package-指定版本信息detail)
 - [删除某个指定版本的 Package](#删除-packagedelete)
 - [对登陆 token 进行更新](#对-token-进行更新retoken)
+- [获取登陆 token](#获取登陆-token)
 - [搜索指定Package](搜索指定Packagesearch)
 
 > 关于如何开发 Package 可以参考相关的问题：
@@ -153,6 +154,21 @@ $ s cli registry retoken
 Serverless Registry login token reset succeeded.
 End of method: retoken
 ```
+
+## 获取登陆 token
+
+> 此操作需要在完成[登陆环节](#登陆功能login) 之后进行。
+
+可以通过 `token` 命令，进行 `token` 信息的获取。
+
+执行效果：
+
+```
+$ s cli registry token
+Token: Swf*********At
+```
+
+独立使用 `token` 的场景：需要在流水线中发布某些 Package , 可以获取该 `token`，并在流水线中通过`s cli registry login --token xxxxx`，进行 `token` 配置等。
 
 ## 搜索指定Package：search
 

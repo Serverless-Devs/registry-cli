@@ -11,6 +11,7 @@ This tool is a Serverless Registry management tool based on Serverless Devs Comp
 - [View a package's specified version information](#View-the-specified-version-information-of-a-Package-detail)
 - [Delete a package of a specified version](#Delete-Package-delete)
 - [Update the login token](#Update-Token-retoken)
+- [Get login token](#Get-login-token)
 - [Search for the specified Package](Search-for-the-specified-Package-search)
 
 > For how to develop Package, please refer to related questions:
@@ -153,6 +154,21 @@ $ s cli registry retoken
 Serverless Registry login token reset succeeded.
 End of method: retoken
 ````
+
+## Get login token
+
+> This operation needs to be done after completing the [login link](#login function login).
+
+The `token` information can be obtained through the `token` command.
+
+Execution effect:
+
+```
+$s cli registry token
+Token: Swf*********At
+```
+
+Scenarios of using `token` independently: you need to publish some packages in the pipeline, you can get the `token`, and configure the `token` through `s cli registry login --token xxxxx` in the pipeline.
 
 ## Search for the specified Package: search
 

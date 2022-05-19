@@ -7,6 +7,7 @@ import {CatchableError} from "./errors";
 import path from 'path';
 import {isIgnored, isIgnoredInCodeUri} from './ignore';
 import {request, Logger, getRootHome, commandParse, fse, spinner, help} from "@serverless-devs/core";
+import to from "@serverless-devs/core/dist/libs/await-to";
 
 const logger = new Logger('platform');
 const FC_CODE_CACHE_DIR = "./"
@@ -617,6 +618,40 @@ export default class Platform {
         logger.log(`Serverless Registry login token reset succeeded.`, "green");
         return null
     }
+
+
+    /**
+     * demo 获取token信息
+     * @param inputs
+     * @returns
+     */
+    public async token(inputs: InputProps) {
+        const token = await this._getToken()
+
+        if (!token) {
+            throw new CatchableError(`Please perform serverless registry through [s cli registry login]`, 'Failed to get serverless registry token')
+        }
+        const apts = {
+            boolean: ['help'],
+            alias: {help: 'h'},
+        };
+        const comParse = commandParse({args: inputs.args}, apts);
+        if (comParse.data && comParse.data.help) {
+            help([{
+                header: 'Token',
+                content: `Get Serverless Registry login token`
+            }, {
+                header: 'Usage',
+                content: `$ s cli registry token`
+            }]);
+            return;
+        }
+
+        logger.warn("The `token` is a very important new credential information for you to use Serverless Registry. Please keep it properly. In case of leakage, please use the `retoken` command to regenerate it.")
+
+        return {"Token": token};
+    }
+
 
     /**
      * demo 查询package
