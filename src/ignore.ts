@@ -1,6 +1,6 @@
 import parser from 'git-ignore-parser';
 import path from 'path';
-import { fse, ignore } from '@serverless-devs/core';
+import {fse, ignore} from '@serverless-devs/core';
 
 const ignoredFile = ['.git', '.svn', '.env', '.DS_Store', '.s/', './.git', './.github', './.idea', './.DS_Store', './.vscode'];
 
@@ -39,27 +39,9 @@ export async function isIgnoredInCodeUri(actualCodeUri: string, runtime: string)
   const fileContent: string = await getIgnoreContent(ignoreFilePath);
   const fileContentList: string[] = fileContent.split('\n');
   const ignoreDependencies = selectIgnored(runtime);
-  // const ignoreList = await generateIgnoreFileFromNasYml(baseDir);
 
-  const ignoredPaths = parser(`${[...ignoredFile, ...ignoreDependencies, ...fileContentList].join('\n')}`);
+  let ignoredPaths = ignoredFile.concat(ignoreDependencies).concat(fileContentList);
   const ig = ignore().add(ignoredPaths);
-
-  return function (f) {
-    const relativePath = path.relative(actualCodeUri, f);
-    if (relativePath === '') { return false; }
-    return ig.ignores(relativePath);
-  };
-}
-
-export async function isIgnoredInCodeUri2(actualCodeUri: string, runtime: string): Promise<Function> {
-  const ignoreFilePath = path.join(actualCodeUri, '.signore');
-
-  const fileContent: string = await getIgnoreContent(ignoreFilePath);
-  const fileContentList: string[] = fileContent.split('\n');
-  const ignoreDependencies = selectIgnored(runtime);
-
-  let array = ignoredFile.concat(ignoreDependencies).concat(fileContentList);
-  const ig = ignore().add(array);
 
   return function (f) {
     const relativePath = path.relative(actualCodeUri, f);
