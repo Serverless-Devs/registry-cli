@@ -1,6 +1,7 @@
-.idea
-node_modules
-.s
+/.idea/
+/node_modules/
+/.s/
+/coverage/
 
 package-lock.json
 yarn.lock
