@@ -10,7 +10,7 @@ Provider:
   - 百度智能云
   - AWS
   - Google Cloud
-Version: 0.0.9
+Version: 0.0.10
 Description: Serverless Registry Component
 HomePage: https://github.com/Serverless-Devs/registry
 Tags: #标签详情
@@ -19,10 +19,10 @@ Category: 其它
 Commands: # 指令，格式为指令：指令描述，例如：
   login: Login Serverless Registry
   pubish: Publish a package to Registry
-  list: List packages which published by logined account
-  versions: List pacakges versions
+  list: List packages which published by login-ed account
+  versions: List packages versions
   detail: Get a package detail information
   delete: Delete a package
   retoken: Update Login token
   token: Get Login token
-  search: Seach packages
+  search: Search packages

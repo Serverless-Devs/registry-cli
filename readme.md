@@ -179,7 +179,7 @@ Token: Swf*********At
 - `keyword`: 搜索关键词
 - `type`：Package 类型，取值为 `Component` 或 `Application`，`Plugin`
 
-操作示例：`s cli registry delete --name-version wordpress@0.0.1 --type Component`
+操作示例：`s cli registry search --type Plugin`
 
 ```
 $ s cli registry search --type plugin

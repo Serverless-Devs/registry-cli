@@ -676,7 +676,7 @@ export default class Platform {
                 optionList: [
                     {
                         name: 'type',
-                        description: '[Required] The type of package, value: component, application, plugin',
+                        description: '[Required] The type of package, value: Component, Application, Plugin',
                         type: String,
                     },
                     {
