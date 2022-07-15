@@ -136,13 +136,12 @@ export default class Platform {
             // 输出提醒
             logger.warn("Serverless registry no longer provides independent registration function, but will uniformly adopt GitHub authorized login scheme.")
             logger.info("The system will attempt to automatically open the browser for authorization......")
+            logger.info("If the browser is not opened automatically, please try to open the following URL manually for authorization.")
+            logger.info(loginUrl)
             try {
                 await sleep(2000)
                 opn(loginUrl)
-            } catch (e) {
-                logger.info("Failed to open the default address. Please try to open the following URL manually for authorization: ")
-                logger.info(loginUrl)
-            }
+            } catch (e) {}
             await logger.task('Getting', [
                 {
                     title: 'Getting login token ...',
