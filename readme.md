@@ -5,8 +5,8 @@
 本工具是一款基于 Serverless Devs Component 的 Serverless Registry 管理工具，通过本工具可以做到：
 
 - [登陆 Serverless Registry](#登陆功能login)
-- [发布 Package 到默认的 Serverless Registry 平台](#发布-pacakge-publish)
-- [查看当前登陆账号发布过的 Package](#查看-pacakge-列表list)
+- [发布 Package 到默认的 Serverless Registry 平台](#发布-package-publish)
+- [查看当前登陆账号发布过的 Package](#查看-package-列表list)
 - [查看某个 Package 的版本信息](#查看某-package-的版本信息versions)
 - [查看某个 Package 指定版本信息](#查看某-package-指定版本信息detail)
 - [删除某个指定版本的 Package](#删除-packagedelete)
@@ -18,7 +18,7 @@
 > - [组件 Component 的开发文档](https://github.com/Serverless-Devs/Serverless-Devs/blob/master/docs/zh/package_dev.md#%E7%BB%84%E4%BB%B6%E5%BC%80%E5%8F%91%E8%AF%B4%E6%98%8E)
 > - [应用 Application 的开发文档](https://github.com/Serverless-Devs/Serverless-Devs/blob/master/docs/zh/package_dev.md#%E5%BA%94%E7%94%A8%E5%BC%80%E5%8F%91%E8%AF%B4%E6%98%8E)    
 > -----
-> 1. 关于 Serverless Pacakge 和 Serverless Devs 以及 Serverless Registry的关系，可以参考[ SDM 规范文档](https://github.com/Serverless-Devs/Serverless-Devs/blob/master/spec/readme.md)    
+> 1. 关于 Serverless Package 和 Serverless Devs 以及 Serverless Registry的关系，可以参考[ SDM 规范文档](https://github.com/Serverless-Devs/Serverless-Devs/blob/master/spec/readme.md)    
 > 2. 关于什么是 Serverless Registry 以及 Serverless Registry 模型规范，可以参看[ SRM 规范文档](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/spec/zh/0.0.2/serverless_registry_model)
 > -----
 > * 需要额外说明的是，本工具仅支持将 Package 发布到默认的 Registry (registry.devsapp.cn/simple)，如果想要发布到其他的 Registry，可以参考：
@@ -44,17 +44,17 @@
 > todo: 由于 China 打开 Github 会受到网络的考验，所以在 login 的环节有优化的空间
 
 
-## 发布 Pacakge ：publish
+## 发布 Package ：publish
 
 > 此操作需要在完成[登陆环节](#登陆功能login) 之后进行。
 
-在符合 [Serverless Pacakge](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/spec/zh/0.0.2/serverless_package_model) 的规范的项目下，可以通过 `publish` 命令，进行组件的发布。
+在符合 [Serverless Package](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/spec/zh/0.0.2/serverless_package_model) 的规范的项目下，可以通过 `publish` 命令，进行组件的发布。
 
 例如可以直接执行：`s cli registry publish`
 
-> 关于 Package 的目录结构以及相关取值和规范，请参考[Pacakge 模型](https://github.com/Serverless-Devs/Serverless-Devs/blob/master/spec/zh/0.0.2/serverless_package_model/3.package_model.md) ;
+> 关于 Package 的目录结构以及相关取值和规范，请参考[Package 模型](https://github.com/Serverless-Devs/Serverless-Devs/blob/master/spec/zh/0.0.2/serverless_package_model/3.package_model.md) ;
 
-## 查看 Pacakge 列表：list
+## 查看 Package 列表：list
 
 > 此操作需要在完成[登陆环节](#登陆功能login) 之后进行。
 
@@ -82,7 +82,7 @@ $ s cli registry list
 
 该命令有一个参数：
 
-- `name`: 表示 Pacakge 名字
+- `name`: 表示 Package 名字
 
 操作示例：`s cli registry versions --name fc`:
 
@@ -110,7 +110,7 @@ Versions:
 
 该命令有一个参数：
 
-- `name-version`: Pacakge 的名称和版本，通过`@`符号进行连接，例如：`demo@0.0.1`
+- `name-version`: Package 的名称和版本，通过`@`符号进行连接，例如：`demo@0.0.1`
 
 操作示例：`s cli registry detail --name-version fc-builda@0.0.1`:
 
@@ -131,7 +131,7 @@ zipball_url: https://registry.devsapp.cn/simple/fc-builda/zipball/0.0.1
 
 该命令有两个参数：
 
-- `name-version`: Pacakge 的名称和版本，通过`@`符号进行连接，例如：`demo@0.0.1`
+- `name-version`: Package 的名称和版本，通过`@`符号进行连接，例如：`demo@0.0.1`
 - `type`：Package 类型，取值为 `Component` 或 `Application`
 
 操作示例：`s cli registry delete --name-version wordpress@0.0.1 --type Component`
