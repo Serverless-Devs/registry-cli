@@ -482,7 +482,7 @@ export default class Platform {
         if (result) {
             return result
         }
-        logger.info('You haven\'t released Pacakge yet')
+        logger.info('You haven\'t released Package yet')
         return null
 
     }

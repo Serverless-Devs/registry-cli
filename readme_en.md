@@ -5,8 +5,8 @@
 This tool is a Serverless Registry management tool based on Serverless Devs Component. With this tool, you can:
 
 - [Login to Serverless Registry](#Login-function-login)
-- [Publish Package to default Serverless Registry platform](#Publish-Pacakge-publish)
-- [View Packages published by the current login account](#VView-the-list-of-Pacakge-list)
+- [Publish Package to default Serverless Registry platform](#Publish-Package-publish)
+- [View Packages published by the current login account](#VView-the-list-of-Package-list)
 - [View the version information of a package](#View-the-version-information-of-a-package-versions)
 - [View a package's specified version information](#View-the-specified-version-information-of-a-Package-detail)
 - [Delete a package of a specified version](#Delete-Package-delete)
@@ -18,7 +18,7 @@ This tool is a Serverless Registry management tool based on Serverless Devs Comp
 > - [Development documentation for Component](https://github.com/Serverless-Devs/Serverless-Devs/blob/master/docs/en/package_dev.md#Component-development-instructions)
 > - [Application Development Documentation](https://github.com/Serverless-Devs/Serverless-Devs/blob/master/docs/en/package_dev.md#Application-development-instructions)
 > -----
-> 1. For the relationship between Serverless Pacakge, Serverless Devs and Serverless Registry, please refer to [SDM Specification Document](https://github.com/Serverless-Devs/Serverless-Devs/blob/master/spec/readme_en.md)
+> 1. For the relationship between Serverless Package, Serverless Devs and Serverless Registry, please refer to [SDM Specification Document](https://github.com/Serverless-Devs/Serverless-Devs/blob/master/spec/readme_en.md)
 > 2. About what is Serverless Registry and Serverless Registry Model Specification, please refer to [SRM Specification Document](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/spec/en/0.0.2/serverless_registry_model)
 > -----
 > * It should be noted that this tool only supports publishing packages to the default registry (registry.devsapp.cn/simple). If you want to publish to other registries, you can refer to:
@@ -44,17 +44,17 @@ There are two modes of login:
 > todo: Since China opens Github, it will be tested by the network, so there is room for optimization in the login link
 
 
-## Publish Pacakge: publish
+## Publish Package: publish
 
 > This operation needs to be done after completing the [login link](#Login-function-login).
 
-Under the project that conforms to the specification of [Serverless Pacakge](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/spec/en/0.0.2/serverless_package_model), you can pass the `publish` command, Publish the component.
+Under the project that conforms to the specification of [Serverless Package](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/spec/en/0.0.2/serverless_package_model), you can pass the `publish` command, Publish the component.
 
 For example, you can directly execute: `s cli registry publish`
 
-> For the directory structure of Package and related values ​​and specifications, please refer to [Pacakge Model](https://github.com/Serverless-Devs/Serverless-Devs/blob/master/spec/en/0.0.2/serverless_package_model/3.package_model.md);
+> For the directory structure of Package and related values ​​and specifications, please refer to [Package Model](https://github.com/Serverless-Devs/Serverless-Devs/blob/master/spec/en/0.0.2/serverless_package_model/3.package_model.md);
 
-## View the list of Pacakge: list
+## View the list of Package: list
 
 > This operation needs to be done after completing the [login link](#Login-function-login).
 
@@ -82,7 +82,7 @@ Use the `versions` command to view the valid version information of the specifie
 
 The command has one parameter:
 
-- `name`: Indicates the Pacakge name
+- `name`: Indicates the Package name
 
 Operation example: `s cli registry versions --name fc`:
 
@@ -110,7 +110,7 @@ Use the `detail` command to view information about a package of a specified vers
 
 The command has one parameter:
 
-- `name-version`: The name and version of the Pacakge, linked by the `@` symbol, for example: `demo@0.0.1`
+- `name-version`: The name and version of the Package, linked by the `@` symbol, for example: `demo@0.0.1`
 
 Operation example: `s cli registry detail --name-version fc-builda@0.0.1`:
 
@@ -131,7 +131,7 @@ The `delete` command can delete the specified version of the specified package. 
 
 The command has two parameters:
 
-- `name-version`: the name and version of the Pacakge, linked by the `@` symbol, e.g. Such as: `demo@0.0.1`
+- `name-version`: the name and version of the Package, linked by the `@` symbol, e.g. Such as: `demo@0.0.1`
 - `type`: Package type, the value is `Component` or `Application`
 
 Operation example: `s cli registry delete --name-version wordpress@0.0.1 --type Component`
