@@ -52,7 +52,7 @@
 
 例如可以直接执行：`s cli registry publish`
 
-> 关于 Package 的目录结构以及相关取值和规范，请参考[Package 模型](https://github.com/Serverless-Devs/Serverless-Devs/blob/master/spec/zh/0.0.2/serverless_package_model/3.package_model.md) ;
+> 关于 Package 的目录结构以及相关取值和规范，请参考[Package 模型](https://github.com/Serverless-Devs/Serverless-Devs/blob/master/spec/zh/0.0.2/serverless_package_model/package_model.md) ;
 
 ## 查看 Package 列表：list
 

@@ -52,7 +52,7 @@ Under the project that conforms to the specification of [Serverless Package](htt
 
 For example, you can directly execute: `s cli registry publish`
 
-> For the directory structure of Package and related values ​​and specifications, please refer to [Package Model](https://github.com/Serverless-Devs/Serverless-Devs/blob/master/spec/en/0.0.2/serverless_package_model/3.package_model.md);
+> For the directory structure of Package and related values ​​and specifications, please refer to [Package Model](https://github.com/Serverless-Devs/Serverless-Devs/blob/master/spec/en/0.0.2/serverless_package_model/package_model.md);
 
 ## View the list of Package: list
 
