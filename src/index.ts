@@ -7,7 +7,6 @@ import {CatchableError} from "./errors";
 import path from 'path';
 import {isIgnored, isIgnoredInCodeUri} from './ignore';
 import {request, Logger, getRootHome, commandParse, fse, spinner, help} from "@serverless-devs/core";
-import to from "@serverless-devs/core/dist/libs/await-to";
 
 const logger = new Logger('platform');
 const FC_CODE_CACHE_DIR = "./"
@@ -131,7 +130,7 @@ export default class Platform {
         } else {
 
             const token = random({length: 20})
-            const loginUrl = `https://github.com/login/oauth/authorize?client_id=beae900546180c7bbdd6&redirect_uri=http://registry.devsapp.cn/user/login/github?token=${token}`
+            const loginUrl = `https://github.com/login/oauth/authorize?client_id=beae900546180c7bbdd6&redirect_uri=https://registry.devsapp.cn/user/login/github?token=${token}`
 
             // 输出提醒
             logger.warn("Serverless registry no longer provides independent registration function, but will uniformly adopt GitHub authorized login scheme.")
@@ -149,7 +148,7 @@ export default class Platform {
                     task: async () => {
                         for (let i = 0; i < 100; i++) {
                             await sleep(2000)
-                            const tempResult = await request('http://registry.devsapp.cn/user/information/github', {
+                            const tempResult = await request('https://registry.devsapp.cn/user/information/github', {
                                 params: {
                                     token: token,
                                 },
@@ -231,7 +230,7 @@ export default class Platform {
 
         const options = {
             'method': 'POST',
-            'url': 'http://registry.devsapp.cn/package/delete',
+            'url': 'https://registry.devsapp.cn/package/delete',
             'headers': {
                 'Content-Type': 'application/x-www-form-urlencoded'
             },
@@ -297,7 +296,7 @@ export default class Platform {
 
         const options = {
             'method': 'GET',
-            'url': `http://registry.devsapp.cn/simple/${package_name.split("@")[0]}/releases`,
+            'url': `https://registry.devsapp.cn/simple/${package_name.split("@")[0]}/releases`,
             'headers': {
                 'Content-Type': 'application/x-www-form-urlencoded'
             }
@@ -450,7 +449,7 @@ export default class Platform {
         }
         const options = {
             'method': 'POST',
-            'url': 'http://registry.devsapp.cn/center/package/publish',
+            'url': 'https://registry.devsapp.cn/center/package/publish',
             'headers': {
                 'Content-Type': 'application/x-www-form-urlencoded'
             },
@@ -527,7 +526,7 @@ export default class Platform {
         }
         const options = {
             'method': 'GET',
-            'url': `http://registry.devsapp.cn/simple/${component}/releases`,
+            'url': `https://registry.devsapp.cn/simple/${component}/releases`,
             'headers': {
                 'Content-Type': 'application/x-www-form-urlencoded'
             }
@@ -592,7 +591,7 @@ export default class Platform {
 
         const options = {
             'method': 'POST',
-            'url': `http://registry.devsapp.cn/user/update/safetycode`,
+            'url': `https://registry.devsapp.cn/user/update/safetycode`,
             'headers': {
                 'Content-Type': 'application/x-www-form-urlencoded'
             },
@@ -699,7 +698,7 @@ export default class Platform {
         }
         const options = {
             'method': 'POST',
-            'url': `http://registry.devsapp.cn/package/search`,
+            'url': `https://registry.devsapp.cn/package/search`,
             'headers': {
                 'Content-Type': 'application/x-www-form-urlencoded'
             },
