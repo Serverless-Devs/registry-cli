@@ -26,6 +26,9 @@
 >    - 如果是其他符合 [ SRM 规范](https://github.com/Serverless-Devs/Serverless-Devs/tree/master/spec/zh/0.0.1/serverless_registry_model) 的 Registry，可以根据提供该 Registry 的平台进行相关工具的确定；
 
 
+-------
+> ⚠️：在使用 Registry 的时候，您可以参考我们的最佳实践做一些更有趣的操作，例如[如何配置“开发版本”](https://github.com/Serverless-Devs/registry-cli/blob/master/docs/best_practices.md)、[如何进行组件/应用测试](https://github.com/Serverless-Devs/registry-cli/blob/master/docs/best_practices.md#%E5%A6%82%E4%BD%95%E8%BF%9B%E8%A1%8C%E7%BB%84%E4%BB%B6%E5%BA%94%E7%94%A8%E6%B5%8B%E8%AF%95)、[如何与流水线进行集成](https://github.com/Serverless-Devs/registry-cli/blob/master/docs/best_practices.md#%E5%A6%82%E4%BD%95%E4%B8%8E%E6%B5%81%E6%B0%B4%E7%BA%BF%E8%BF%9B%E8%A1%8C%E9%9B%86%E6%88%90)、[如何进行多人协作](https://github.com/Serverless-Devs/registry-cli/blob/master/docs/best_practices.md#%E5%A6%82%E4%BD%95%E8%BF%9B%E8%A1%8C%E5%A4%9A%E4%BA%BA%E5%8D%8F%E4%BD%9C)等。
+
 ## 登陆功能：login
 
 在对 Registry 进行操作之前，需要有身份校验的逻辑（例如，你只能更新属于你的 Package 等），所以在使用 Registry 功能之前，需要进行登录相关操作。
