@@ -14,8 +14,8 @@ export function checkEdition(str: string) {
     return;
   }
   const { Edition } = yaml.load(str) as Record<string, any>;
-  if (Edition && Edition !== '2.0.0') {
-    const message: string = `Edition must be 2.0.0 version. Please join DingTalk group: 33947367 for consultation`;
+  if (Edition && Edition !== '2.0.0' && Edition !== '1.0.0') {
+    const message: string = `Edition must be 2.0.0 / 1.0.0 version. Please join DingTalk group: 33947367 for consultation`;
     throw new Error(message);
   }
 }
