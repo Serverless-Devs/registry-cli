@@ -4,9 +4,21 @@ import path from 'path';
 import crypto from 'crypto';
 import _ from 'lodash';
 import Table from 'tty-table';
+import yaml from 'js-yaml';
 
 const { fse, colors, inquirer } = core;
 const { green, white } = colors;
+
+export function checkEdition(str: string) {
+  if (!str) {
+    return;
+  }
+  const { Edition } = yaml.load(str) as Record<string, any>;
+  if (Edition && Edition !== '2.0.0') {
+    const message: string = `Edition must be 2.0.0 version. Please join DingTalk group: 33947367 for consultation`;
+    throw new Error(message);
+  }
+}
 
 export function createProgressBar(format, options) {
   const opts = Object.assign({

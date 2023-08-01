@@ -7,6 +7,7 @@ import {CatchableError} from "./errors";
 import path from 'path';
 import {isIgnored, isIgnoredInCodeUri} from './ignore';
 import {request, Logger, getRootHome, commandParse, fse, spinner, help} from "@serverless-devs/core";
+import { checkEdition } from './utils';
 
 const logger = new Logger('platform');
 const FC_CODE_CACHE_DIR = "./"
@@ -360,6 +361,7 @@ export default class Platform {
             return;
         }
         const publish = await this._getContent(['./publish.yaml', './publish.yml'])
+        checkEdition(publish);
         const readme = await this._getContent(['./readme.md', './README.md', './README.MD', './Readme.MD', './Readme.md'])
         const version_body = await this._getContent(['./version.md', './VERSION.md', './VERSION.MD'])
         const syaml = await this._getContent(['./src/s.yaml', './src/s.yml'])
