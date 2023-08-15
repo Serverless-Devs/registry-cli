@@ -365,6 +365,7 @@ export default class Platform {
         const readme = await this._getContent(['./readme.md', './README.md', './README.MD', './Readme.MD', './Readme.md'])
         const version_body = await this._getContent(['./version.md', './VERSION.md', './VERSION.MD'])
         const syaml = await this._getContent(['./src/s.yaml', './src/s.yml'])
+        const flow = await this._getContent(['./src/flow.yaml', './src/flow.yml'])
         let rpbody
         try {
             rpbody = await rp({
@@ -378,7 +379,8 @@ export default class Platform {
                     "publish": publish,
                     "version_body": version_body,
                     "readme": readme,
-                    "syaml": syaml
+                    "syaml": syaml,
+                    "flowyaml": flow,
                 }
             });
         } catch (e) {
