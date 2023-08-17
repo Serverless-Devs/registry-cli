@@ -10,7 +10,7 @@ Provider:
   - 百度智能云
   - AWS
   - Google Cloud
-Version: 0.0.13
+Version: 0.0.14
 Description: Serverless Registry Component
 HomePage: https://github.com/Serverless-Devs/registry
 Tags: #标签详情

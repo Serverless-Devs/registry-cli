@@ -20,6 +20,22 @@ export function checkEdition(str: string) {
   }
 }
 
+export function getDefinitionPaths(str: string) {
+  if (!str) {
+    throw new Error('Need to s YAML content');
+  }
+  const { services } = yaml.load(str) as Record<string, any>;
+  const definitionPaths: any = {}
+  _.forEach(services, (value: any, key: string) => {
+    const component: string = _.get(value, 'component', '');
+    const definition: string = _.get(value, 'props.definition', '');
+    if ((component === 'devsapp/fnf' || component === 'fnf') && definition) {
+      definitionPaths[key] = definition
+    }
+  })
+  return definitionPaths;
+}
+
 export function createProgressBar(format, options) {
   const opts = Object.assign({
     complete: green('█'),
