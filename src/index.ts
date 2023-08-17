@@ -1,13 +1,14 @@
-import {InputProps} from './common/entity';
+import { InputProps } from './common/entity';
 import random from 'random-string'
 import opn from 'opn'
 import rp from 'request-promise'
-import {pack} from './zip';
-import {CatchableError} from "./errors";
+import { pack } from './zip';
+import { CatchableError } from "./errors";
 import path from 'path';
-import {isIgnored, isIgnoredInCodeUri} from './ignore';
-import {request, Logger, getRootHome, commandParse, fse, spinner, help} from "@serverless-devs/core";
-import { checkEdition } from './utils';
+import { isIgnored, isIgnoredInCodeUri } from './ignore';
+import { request, Logger, getRootHome, commandParse, fse, spinner, help } from "@serverless-devs/core";
+import { checkEdition, getDefinitionPaths } from './utils';
+import { isEmpty } from 'lodash';
 
 const logger = new Logger('platform');
 const FC_CODE_CACHE_DIR = "./"
@@ -38,6 +39,21 @@ export default class Platform {
             }
         }
         return undefined
+    }
+
+    async getFlowsYaml(syaml: string) {
+        const definitionPaths = getDefinitionPaths(syaml);
+        if (isEmpty(definitionPaths)) return []
+        const asyncFlowYaml = []
+        for (const key in definitionPaths) {
+            asyncFlowYaml.push(this.getFlowYamlContent(definitionPaths[key], key))
+        }
+        return await Promise.all(asyncFlowYaml);
+    }
+
+    async getFlowYamlContent(value, key) {
+        const flowYaml = await this._getContent([`./src/${value}`])
+        return { [key]: flowYaml }
     }
 
     async generateCodeIngore(baseDir: string, codeUri: string, runtime: string): Promise<Function | null> {
@@ -92,9 +108,9 @@ export default class Platform {
 
         const apts = {
             boolean: ['help'],
-            alias: {help: 'h'},
+            alias: { help: 'h' },
         };
-        const comParse = commandParse({args: inputs.args}, apts);
+        const comParse = commandParse({ args: inputs.args }, apts);
         if (comParse.data && comParse.data.help) {
             help([{
                 header: 'Login',
@@ -130,7 +146,7 @@ export default class Platform {
             st = 1
         } else {
 
-            const token = random({length: 20})
+            const token = random({ length: 20 })
             const loginUrl = `https://github.com/login/oauth/authorize?client_id=beae900546180c7bbdd6&redirect_uri=https://registry.devsapp.cn/user/login/github?token=${token}`
 
             // 输出提醒
@@ -141,7 +157,7 @@ export default class Platform {
             try {
                 await sleep(2000)
                 opn(loginUrl)
-            } catch (e) {}
+            } catch (e) { }
             await logger.task('Getting', [
                 {
                     title: 'Getting login token ...',
@@ -188,9 +204,9 @@ export default class Platform {
         }
         const apts = {
             boolean: ['help'],
-            alias: {help: 'h'},
+            alias: { help: 'h' },
         };
-        const comParse = commandParse({args: inputs.args}, apts);
+        const comParse = commandParse({ args: inputs.args }, apts);
         if (comParse.data && comParse.data.help) {
             help([{
                 header: 'Delete',
@@ -263,9 +279,9 @@ export default class Platform {
         }
         const apts = {
             boolean: ['help'],
-            alias: {help: 'h'},
+            alias: { help: 'h' },
         };
-        const comParse = commandParse({args: inputs.args}, apts);
+        const comParse = commandParse({ args: inputs.args }, apts);
         if (comParse.data && comParse.data.help) {
             help([{
                 header: 'Detail',
@@ -342,9 +358,9 @@ export default class Platform {
         }
         const apts = {
             boolean: ['help'],
-            alias: {help: 'h'},
+            alias: { help: 'h' },
         };
-        const comParse = commandParse({args: inputs.args}, apts);
+        const comParse = commandParse({ args: inputs.args }, apts);
         if (comParse.data && comParse.data.help) {
             help([{
                 header: 'Publish',
@@ -365,7 +381,7 @@ export default class Platform {
         const readme = await this._getContent(['./readme.md', './README.md', './README.MD', './Readme.MD', './Readme.md'])
         const version_body = await this._getContent(['./version.md', './VERSION.md', './VERSION.MD'])
         const syaml = await this._getContent(['./src/s.yaml', './src/s.yml'])
-        const flow = await this._getContent(['./src/flow.yaml', './src/flow.yml'])
+        const flow = await this.getFlowsYaml(syaml)
         let rpbody
         try {
             rpbody = await rp({
@@ -380,7 +396,7 @@ export default class Platform {
                     "version_body": version_body,
                     "readme": readme,
                     "syaml": syaml,
-                    "flowyaml": flow,
+                    "flowyaml": JSON.stringify(flow),
                 }
             });
         } catch (e) {
@@ -397,7 +413,7 @@ export default class Platform {
             await fse.mkdirSync('./.s/')
         } catch (e) {
         }
-        const tempName = './.s/' + random({length: 20}) + '.zip'
+        const tempName = './.s/' + random({ length: 20 }) + '.zip'
         const runtime = "nodejs12"
         await this.zipCode(baseDir, codeUri, tempName, runtime)
         const vm = spinner('Publishing');
@@ -433,9 +449,9 @@ export default class Platform {
 
         const apts = {
             boolean: ['help'],
-            alias: {help: 'h'},
+            alias: { help: 'h' },
         };
-        const comParse = commandParse({args: inputs.args}, apts);
+        const comParse = commandParse({ args: inputs.args }, apts);
         if (comParse.data && comParse.data.help) {
             help([{
                 header: 'List',
@@ -497,9 +513,9 @@ export default class Platform {
     public async versions(inputs: InputProps) {
         const apts = {
             boolean: ['help'],
-            alias: {help: 'h'},
+            alias: { help: 'h' },
         };
-        const comParse = commandParse({args: inputs.args}, apts);
+        const comParse = commandParse({ args: inputs.args }, apts);
         if (comParse.data && comParse.data.help) {
             help([{
                 header: 'Versions',
@@ -574,9 +590,9 @@ export default class Platform {
         }
         const apts = {
             boolean: ['help'],
-            alias: {help: 'h'},
+            alias: { help: 'h' },
         };
-        const comParse = commandParse({args: inputs.args}, apts);
+        const comParse = commandParse({ args: inputs.args }, apts);
         if (comParse.data && comParse.data.help) {
             help([{
                 header: 'Retoken',
@@ -635,9 +651,9 @@ export default class Platform {
         }
         const apts = {
             boolean: ['help'],
-            alias: {help: 'h'},
+            alias: { help: 'h' },
         };
-        const comParse = commandParse({args: inputs.args}, apts);
+        const comParse = commandParse({ args: inputs.args }, apts);
         if (comParse.data && comParse.data.help) {
             help([{
                 header: 'Token',
@@ -651,7 +667,7 @@ export default class Platform {
 
         logger.warn("The `token` is a very important new credential information for you to use Serverless Registry. Please keep it properly. In case of leakage, please use the `retoken` command to regenerate it.")
 
-        return {"Token": token};
+        return { "Token": token };
     }
 
 
@@ -663,9 +679,9 @@ export default class Platform {
     public async search(inputs: InputProps) {
         const apts = {
             boolean: ['help'],
-            alias: {help: 'h'},
+            alias: { help: 'h' },
         };
-        const comParse = commandParse({args: inputs.args}, apts);
+        const comParse = commandParse({ args: inputs.args }, apts);
         if (comParse.data && comParse.data.help) {
             help([{
                 header: 'Search',
