@@ -5,6 +5,7 @@ import crypto from 'crypto';
 import _ from 'lodash';
 import Table from 'tty-table';
 import yaml from 'js-yaml';
+import { includes } from 'lodash';
 
 const { fse, colors, inquirer } = core;
 const { green, white } = colors;
@@ -22,14 +23,15 @@ export function checkEdition(str: string) {
 
 export function getDefinitionPaths(str: string) {
   if (!str) {
-    throw new Error('Need to s YAML content');
+    return {};
   }
   const { services } = yaml.load(str) as Record<string, any>;
   const definitionPaths: any = {}
   _.forEach(services, (value: any, key: string) => {
     const component: string = _.get(value, 'component', '');
     const definition: string = _.get(value, 'props.definition', '');
-    if ((component === 'devsapp/fnf' || component === 'fnf') && definition) {
+    const fnfComponents = ['devsapp/fnf', 'fnf', 'devsapp/fnf@dev', 'fnf@dev']
+    if (includes(fnfComponents, component) && definition) {
       definitionPaths[key] = definition
     }
   })
