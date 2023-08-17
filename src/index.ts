@@ -381,7 +381,7 @@ export default class Platform {
         const readme = await this._getContent(['./readme.md', './README.md', './README.MD', './Readme.MD', './Readme.md'])
         const version_body = await this._getContent(['./version.md', './VERSION.md', './VERSION.MD'])
         const syaml = await this._getContent(['./src/s.yaml', './src/s.yml'])
-        const flow = await this.getFlowsYaml(syaml)
+        const flow = syaml ? await this.getFlowsYaml(syaml) : []
         let rpbody
         try {
             rpbody = await rp({
